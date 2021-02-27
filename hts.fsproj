@@ -1,0 +1,40 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <Authors>Namdak Tonpa;Siegmentation Fault</Authors>
+    <Company>Groupoid Infinity</Company>
+    <OutputType>Exe</OutputType>
+    <UseAppHost>true</UseAppHost>
+    <Version>1.0.0</Version>
+    <IncludeSource>true</IncludeSource>
+    <PackageTags>Homotopy Type Theory;Cubical Type Theory</PackageTags>
+    <PackageDescription>Homotopy Type System</PackageDescription>
+    <RepositoryUrl>https://github.com/groupoid/hts</RepositoryUrl>
+    <Description>Homotopy Type System</Description>
+    <FsLexToolExe>fslex.dll</FsLexToolExe>
+    <FsYaccToolExe>fsyacc.dll</FsYaccToolExe>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <FsYacc Include="src/parser.fsy">
+      <OtherFlags>--module parser</OtherFlags>
+    </FsYacc>
+
+    <FsLex Include="src/lexer.fsl">
+      <OtherFlags>--module lexer --unicode</OtherFlags>
+    </FsLex>
+
+    <Compile Include="src/parser.fsi" />
+    <Compile Include="src/parser.fs" />
+    <Compile Include="src/lexer.fs" />
+    <Compile Include="src/types.fs" />
+    <Compile Include="src/program.fs" />
+
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FsLexYacc" Version="10.2.0" />
+  </ItemGroup>
+
+</Project>

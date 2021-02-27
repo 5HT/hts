@@ -1,0 +1,27 @@
+{
+open FSharp.Text.Lexing
+open parser
+let lexeme lexbuf = LexBuffer<_>.LexemeString lexbuf
+}
+
+let number = ['0'-'9']
+let whitespace = [' ' '\t' '\r' '\n' ]
+let ident = ['a'-'z' 'A'-'Z' '_' '0'-'9' '-' '⁴'-'₎' '‐'-'↑' '↓'-'↙' '∁'-'◿' 'α'-'κ' 'μ'-'Ͽ' ]
+
+rule tokenize = parse
+| whitespace        { tokenize lexbuf }
+| number+           { lexeme lexbuf |> System.Int32.Parse |> NUMBER }
+| ident+            { lexeme lexbuf |> IDENT }
+| '('               { LPAREN }
+| ')'               { RPAREN }
+| '{'               { LCURLY }
+| '}'               { RCURLY }
+| '['               { LSQUARE }
+| ']'               { RSQUARE }
+| '*'               { UNIVERSE }
+| '\\'              { LAMBDA }
+| '.'               { DOT }
+| ','               { COMMA }
+| '-' '>'           { FIBER }
+| eof               { EOF }
+| _                 { lexeme lexbuf |> sprintf "Parsing error: %s" |> failwith }
